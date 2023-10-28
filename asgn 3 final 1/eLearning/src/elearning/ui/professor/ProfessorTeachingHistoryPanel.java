@@ -4,9 +4,10 @@
  */
 package elearning.ui.professor;
 
-import elearning.models.CourseModel;
-import elearning.models.SemisterModel;
-import elearning.models.UserDefaultDataModel;
+import elearning.models.ProfCourseSubjectMapModel;
+import elearning.models.ProfessorCourseModel;
+import elearning.models.ProfessorDataModel;
+import elearning.models.UserModel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,25 +15,25 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author harsh
  */
-public class ProfCourseCatalogPanel extends javax.swing.JPanel {
+public class ProfessorTeachingHistoryPanel extends javax.swing.JPanel {
 
     JPanel profContentPanel;
-    UserDefaultDataModel userDefaultDataObj;
-    /**
-     * Creates new form CourseCatalogPanel
-     */
+    ProfessorDataModel professorDataObj;
+    UserModel userObj;
 
     /**
-     * Creates new form CourseCatalogPanel
+     * Creates new form ProfessorTeachingHistoryPanel
+     *
      * @param profContentPanel
-     * @param userDefaultDataObj
+     * @param professorDataObj
+     * @param userObj
      */
-    public ProfCourseCatalogPanel(JPanel profContentPanel,
-            UserDefaultDataModel userDefaultDataObj) {
+    public ProfessorTeachingHistoryPanel(JPanel profContentPanel,
+            ProfessorDataModel professorDataObj,
+            UserModel userObj) {
         initComponents();
-        this.profContentPanel = profContentPanel;
-        this.userDefaultDataObj = userDefaultDataObj;
-        
+        this.professorDataObj = professorDataObj;
+        this.userObj = userObj;
         loadTableData();
     }
 
@@ -53,15 +54,15 @@ public class ProfCourseCatalogPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Course Catalog");
+        jLabel1.setText("Teaching History");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "SNo", "Course Name", "Subject/ Stream",
-                "Term","Duration", "Description"
+                "Sno", "Course", "Subject", "Term",
+                "Start Date", "End Date", "Status"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -71,7 +72,7 @@ public class ProfCourseCatalogPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(231, 231, 231)
+                .addGap(237, 237, 237)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -81,39 +82,42 @@ public class ProfCourseCatalogPanel extends javax.swing.JPanel {
                         .addComponent(jSeparator1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     private void loadTableData() {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
-        if (this.userDefaultDataObj.getSemisterSubList() != null
-                && !this.userDefaultDataObj.getSemisterSubList().isEmpty()) {
+        if (this.professorDataObj.getProfessorCourseLi() != null
+                && !this.professorDataObj.getProfessorCourseLi().isEmpty()) {
             int rowIndex = 1;
-            for (SemisterModel semisterObj : this.userDefaultDataObj.getSemisterSubList()) {
-                for (CourseModel courseObj : semisterObj.getSubjects()) {
-                    Object[] row = new Object[6];
-                    row[0] = rowIndex;
-                    row[1] = courseObj.getCourseName();
-                    row[2] = courseObj.getSubjectName();
-                    row[3] = semisterObj.getSemisterName();
-                    row[4] = courseObj.getDuration();
-                    row[5] = "";
+            for (ProfessorCourseModel profCourseObj : this.professorDataObj.getProfessorCourseLi()) {
+                if (profCourseObj.getProfessorName().equalsIgnoreCase(userObj.getFullName())) {
+                    for (ProfCourseSubjectMapModel subjMap : profCourseObj.getProfCourseSubjectLi()) {
+                        Object[] row = new Object[7];
+                        row[0] = rowIndex;
+                        row[1] = subjMap.getCourseName();
+                        row[2] = subjMap.getSubjectName();
+                        row[3] = profCourseObj.getSemisterName();
+                        row[4] = subjMap.getStartDate();
+                        row[5] = subjMap.getEndDate();
+                        row[6] = subjMap.getStatus();
 
-                    dtm.addRow(row);
-                    rowIndex++;
+                        dtm.addRow(row);
+                        rowIndex++;
+                    }
                 }
             }
         }

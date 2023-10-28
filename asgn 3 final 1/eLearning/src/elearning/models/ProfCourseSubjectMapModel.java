@@ -8,21 +8,13 @@ package elearning.models;
  *
  * @author harsh
  */
-public class CourseModel {
+public class ProfCourseSubjectMapModel {
 
     private String subjectName;
     private String courseName;
-    private String duration;
-
-    public CourseModel() {
-
-    }
-
-    public CourseModel(String subjectName, String courseName, String duration) {
-        this.subjectName = subjectName;
-        this.courseName = courseName;
-        this.duration = duration;
-    }
+    private String startDate;
+    private String endDate;
+    private String status;
 
     /**
      * @return the subjectName
@@ -53,17 +45,45 @@ public class CourseModel {
     }
 
     /**
-     * @return the duration
+     * @return the startDate
      */
-    public String getDuration() {
-        return duration;
+    public String getStartDate() {
+        return startDate;
     }
 
     /**
-     * @param duration the duration to set
+     * @param startDate the startDate to set
      */
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * @return the endDate
+     */
+    public String getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @param endDate the endDate to set
+     */
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

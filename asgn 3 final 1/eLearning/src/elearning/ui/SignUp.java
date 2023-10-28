@@ -4,9 +4,14 @@
  */
 package elearning.ui;
 
+import elearning.models.ProfessorDataModel;
+import elearning.models.StudentDataModel;
+import elearning.models.UserDefaultDataModel;
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import java.awt.CardLayout;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -18,7 +23,10 @@ public class SignUp extends javax.swing.JPanel {
 
     JPanel appContainerPanel;
 
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
+    UserDefaultDataModel userDefaultDataObj;
+    ProfessorDataModel professorDataObj;
+    StudentDataModel studentDataObj;
 
     /**
      * Creates new form SignUp
@@ -26,10 +34,13 @@ public class SignUp extends javax.swing.JPanel {
      * @param appContainerPanel
      * @param userSignUpObj
      */
-    public SignUp(JPanel appContainerPanel, UserSignUpModel userSignUpObj) {
+    public SignUp(JPanel appContainerPanel, UserDirectory userSignUpObj, UserDefaultDataModel userDefaultDataObj, ProfessorDataModel professorDataObj, StudentDataModel studentDataObj) {
         initComponents();
         this.appContainerPanel = appContainerPanel;
         this.userSignUpObj = userSignUpObj;
+        this.userDefaultDataObj = userDefaultDataObj;
+        this.professorDataObj = professorDataObj;
+        this.studentDataObj = studentDataObj;
     }
 
     /**
@@ -55,6 +66,8 @@ public class SignUp extends javax.swing.JPanel {
         userNameTextBox = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         fullNameTextBox = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        ValidateLabel = new javax.swing.JLabel();
 
         setAutoscrolls(true);
 
@@ -87,18 +100,8 @@ public class SignUp extends javax.swing.JPanel {
 
         passwordTextBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         passwordTextBox.setForeground(new java.awt.Color(102, 102, 102));
-        passwordTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextBoxActionPerformed(evt);
-            }
-        });
 
         loginTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "STUDENT", "PROFESSOR" }));
-        loginTypeCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginTypeComboActionPerformed(evt);
-            }
-        });
 
         jButton1.setBackground(new java.awt.Color(0, 102, 102));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,6 +137,23 @@ public class SignUp extends javax.swing.JPanel {
                 fullNameTextBoxActionPerformed(evt);
             }
         });
+
+        StringBuilder sbf = new StringBuilder();
+        sbf.append("<html>");
+        sbf.append("<u><b>Password Guidelines:</b></u>").append("</br>");
+        sbf.append("1. At least 8 characters long but 12 or more is better.").append("</br>");
+        sbf.append("2. A combination of uppercase letters, lowercase letters, numbers, and symbols.")
+        .append("</br> Do not use these *&/(/^%$ symbols)").append("</br>");
+        sbf.append("</html>");
+        jLabel2.setForeground(new java.awt.Color(255, 0, 102));
+        jLabel2.setText("<html> "
+            + "Password Guidelines: </br>"
+            + "1. At least 8 characters long but 12 or more is better.</br>"
+            + "2. A combination of uppercase letters, lowercase letters, numbers, and symbols.</br>"
+            + "Do not use these *&/(/^%$ symbols) </br>"
+            + "</html>");
+
+        ValidateLabel.setForeground(new java.awt.Color(255, 0, 51));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -172,8 +192,10 @@ public class SignUp extends javax.swing.JPanel {
                                     .addComponent(contactNoTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(passwordTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(emailTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 95, Short.MAX_VALUE))))
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ValidateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 121, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,37 +227,36 @@ public class SignUp extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(emailTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(ValidateLabel)
+                .addGap(4, 4, 4)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        UserModel userObj = new UserModel();
+        if (validateForm()) {
+            UserModel userObj = new UserModel();
+            userObj.setUserType(this.loginTypeCombo.getSelectedItem().toString());
+            userObj.setUsername(this.userNameTextBox.getText());
+            userObj.setPassword(this.passwordTextBox.getText());
+            userObj.setEmail(this.emailTextBox.getText());
+            userObj.setFullName(this.fullNameTextBox.getText());
+            userObj.setMobile(this.contactNoTextBox.getText());
 
-        userObj.setUserType(this.loginTypeCombo.getSelectedItem().toString());
-        userObj.setUsername(this.userNameTextBox.getText());
-        userObj.setPassword(this.passwordTextBox.getText());
-        userObj.setEmail(this.emailTextBox.getText());
-        userObj.setFullName(this.fullNameTextBox.getText());
-        userObj.setMobile(this.contactNoTextBox.getText());
-        
-       userSignUpObj.getUserLi().add(userObj);
-        if (fullNameTextBox.equals("")){
-        JOptionPane.showMessageDialog(null, "user name can't be empty");
-            
+            userSignUpObj.getUserLi().add(userObj);
+
+            JOptionPane.showMessageDialog(null, "User SignUp Successfull!");
+
+//            Login loginPanel = new Login(appContainerPanel, userSignUpObj);
+            Login loginPanel = new Login(appContainerPanel, userSignUpObj, userDefaultDataObj, professorDataObj, studentDataObj);
+            appContainerPanel.add("Login", loginPanel);
+            CardLayout layout = (CardLayout) appContainerPanel.getLayout();
+            layout.next(appContainerPanel);
         }
-
-        userSignUpObj.getUserLi().add(userObj);
-        
-        JOptionPane.showMessageDialog(null, "User SignUp Successfull!");
-        
-        Login loginPanel = new Login(appContainerPanel, userSignUpObj);
-        appContainerPanel.add("Login", loginPanel);
-        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
-        layout.next(appContainerPanel);
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void contactNoTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNoTextBoxActionPerformed
@@ -250,22 +271,58 @@ public class SignUp extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fullNameTextBoxActionPerformed
 
-    private void loginTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginTypeComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginTypeComboActionPerformed
-
-    private void passwordTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextBoxActionPerformed
-        // TODO add your handling code here:
+    private boolean validateForm() {
+        String regex = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}$";
         
-    }//GEN-LAST:event_passwordTextBoxActionPerformed
+        if (this.fullNameTextBox.getText().trim().isEmpty()) {
+            this.ValidateLabel.setText("User Fullname is mandatory..");
+            return false;
+        } else if (this.fullNameTextBox.getText().trim().length() < 8) {
+            this.ValidateLabel.setText("User Fullname must be minimum of eight characters..");
+            return false;
+        }
+        if (this.userNameTextBox.getText().trim().isEmpty()) {
+            this.ValidateLabel.setText("Username is mandatory..");
+            return false;
+        } else if (this.userNameTextBox.getText().trim().length() < 8) {
+            this.ValidateLabel.setText("Username must be minimum of eight characters..");
+            return false;
+        } else {
+            if (!this.userSignUpObj.getUserLi().isEmpty()) {
+                for (UserModel userObj : this.userSignUpObj.getUserLi()) {
+                    if (userObj.getUsername().equalsIgnoreCase(this.userNameTextBox.getText().trim())) {
+                        this.ValidateLabel.setText("Username already exists..");
+                        return false;
+                    }
+                }
+            }
+        }
+        if (this.passwordTextBox.getText().trim().isEmpty()) {
+            this.ValidateLabel.setText("Password is mandatory..");
+            return false;
+        } else if (this.passwordTextBox.getText().trim().length() < 8) {
+            this.ValidateLabel.setText("Password must be greater than eight characters..");
+            return false;
+        } else {
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(this.passwordTextBox.getText().trim());
+            if (!m.matches()) {
+                this.ValidateLabel.setText("Invalid password. Please follow password guidelines..");
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ValidateLabel;
     private javax.swing.JTextField contactNoTextBox;
     private javax.swing.JTextField emailTextBox;
     private javax.swing.JTextField fullNameTextBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

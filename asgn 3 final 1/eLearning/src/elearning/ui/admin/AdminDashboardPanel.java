@@ -4,8 +4,9 @@
  */
 package elearning.ui.admin;
 
+import elearning.models.UserDefaultDataModel;
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -16,8 +17,9 @@ import javax.swing.JPanel;
 public class AdminDashboardPanel extends javax.swing.JPanel {
 
     JPanel appContainerPanel;
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
     UserModel userObj;
+    UserDefaultDataModel userDefaultDataObj;
 
     /**
      * Creates new form AdminDashboardPanel
@@ -25,13 +27,16 @@ public class AdminDashboardPanel extends javax.swing.JPanel {
      * @param appContainerPanel
      * @param userSignUpObj
      * @param userObj
+     * @param userDefaultDataObj
      */
     public AdminDashboardPanel(JPanel appContainerPanel,
-            UserSignUpModel userSignUpObj, UserModel userObj) {
+            UserDirectory userSignUpObj, UserModel userObj,
+            UserDefaultDataModel userDefaultDataObj) {
         initComponents();
         this.appContainerPanel = appContainerPanel;
         this.userSignUpObj = userSignUpObj;
         this.userObj = userObj;
+        this.userDefaultDataObj = userDefaultDataObj;
 
         System.out.println("User Details Size : " + this.userSignUpObj.getUserLi().size());
     }
@@ -147,7 +152,8 @@ public class AdminDashboardPanel extends javax.swing.JPanel {
 
     private void adminDashCourseCatalogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminDashCourseCatalogButtonActionPerformed
         // TODO add your handling code here:
-        AdminCourseCatalogPanel courseCatalog = new AdminCourseCatalogPanel(adminDashContentPanel);
+        AdminCourseCatalogPanel courseCatalog = new AdminCourseCatalogPanel(
+                adminDashContentPanel, this.userDefaultDataObj);
         adminDashContentPanel.add("AdminCourseCatalog", courseCatalog);
         CardLayout layout = (CardLayout) adminDashContentPanel.getLayout();
         layout.next(adminDashContentPanel);

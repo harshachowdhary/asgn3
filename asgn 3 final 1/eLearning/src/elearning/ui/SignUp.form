@@ -62,8 +62,10 @@
                                   <Component id="jButton1" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="jLabel2" min="-2" pref="469" max="-2" attributes="0"/>
+                          <Component id="ValidateLabel" min="-2" pref="469" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="95" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="121" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -105,8 +107,12 @@
                   <Component id="emailTextBox" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="ValidateLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel2" pref="77" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -188,9 +194,6 @@
           <Color blue="66" green="66" red="66" type="rgb"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordTextBoxActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="loginTypeCombo">
       <Properties>
@@ -201,9 +204,6 @@
           </StringArray>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginTypeComboActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -274,6 +274,26 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fullNameTextBoxActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="&quot;&lt;html&gt; &quot;&#xa;    + &quot;Password Guidelines: &lt;/br&gt;&quot;&#xa;    + &quot;1. At least 8 characters long but 12 or more is better.&lt;/br&gt;&quot;&#xa;    + &quot;2. A combination of uppercase letters, lowercase letters, numbers, and symbols.&lt;/br&gt;&quot;&#xa;    + &quot;Do not use these *&amp;/(/^%$ symbols) &lt;/br&gt;&quot;&#xa;    + &quot;&lt;/html&gt;&quot;" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="StringBuilder sbf = new StringBuilder();&#xa;sbf.append(&quot;&lt;html&gt;&quot;);&#xa;sbf.append(&quot;&lt;u&gt;&lt;b&gt;Password Guidelines:&lt;/b&gt;&lt;/u&gt;&quot;).append(&quot;&lt;/br&gt;&quot;);&#xa;sbf.append(&quot;1. At least 8 characters long but 12 or more is better.&quot;).append(&quot;&lt;/br&gt;&quot;);&#xa;sbf.append(&quot;2. A combination of uppercase letters, lowercase letters, numbers, and symbols.&quot;)&#xa;.append(&quot;&lt;/br&gt; Do not use these *&amp;/(/^%$ symbols)&quot;).append(&quot;&lt;/br&gt;&quot;);&#xa;sbf.append(&quot;&lt;/html&gt;&quot;);"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="ValidateLabel">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -4,9 +4,17 @@
  */
 package elearning.ui;
 
+import elearning.models.SemisterModel;
+import elearning.models.CourseModel;
+import elearning.models.FeedbackHistory;
+import elearning.models.ProfessorDataModel;
+import elearning.models.StudentDataModel;
+import elearning.models.UserDefaultDataModel;
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,17 +22,27 @@ import java.awt.CardLayout;
  */
 public class MainAppJFrame extends javax.swing.JFrame {
 
-    private UserSignUpModel userSignUpObj = new UserSignUpModel();
+    private UserDirectory userSignUpObj = new UserDirectory();
+
+    private UserDefaultDataModel userDefaultDataObj = new UserDefaultDataModel();
+
+    private ProfessorDataModel professorDataObj = new ProfessorDataModel();
+
+    private StudentDataModel studentDataObj = new StudentDataModel();
 
     /**
      * Creates new form MainAppJFrame
+     *
      */
+    private FeedbackHistory feedback;
+
     public MainAppJFrame() {
 
         initComponents();
         this.logoutButton.setVisible(false);
 
         loadDefaultAdminUserData();
+        loadDefaultCourseData();
     }
 
     /**
@@ -40,6 +58,8 @@ public class MainAppJFrame extends javax.swing.JFrame {
         leftMenuPanel = new javax.swing.JPanel();
         loginButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
+        AboutELearningBtn = new javax.swing.JButton();
+        contactUsBtn = new javax.swing.JButton();
         appContainerPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,6 +84,21 @@ public class MainAppJFrame extends javax.swing.JFrame {
             }
         });
 
+        AboutELearningBtn.setBackground(new java.awt.Color(153, 153, 255));
+        AboutELearningBtn.setText("About E-Learning");
+        AboutELearningBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AboutELearningBtnActionPerformed(evt);
+            }
+        });
+
+        contactUsBtn.setText("Contact Us");
+        contactUsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactUsBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftMenuPanelLayout = new javax.swing.GroupLayout(leftMenuPanel);
         leftMenuPanel.setLayout(leftMenuPanelLayout);
         leftMenuPanelLayout.setHorizontalGroup(
@@ -71,18 +106,34 @@ public class MainAppJFrame extends javax.swing.JFrame {
             .addGroup(leftMenuPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(leftMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                    .addComponent(loginButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(leftMenuPanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(contactUsBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(leftMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(leftMenuPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(AboutELearningBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         leftMenuPanelLayout.setVerticalGroup(
             leftMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftMenuPanelLayout.createSequentialGroup()
-                .addContainerGap(512, Short.MAX_VALUE)
+                .addGap(121, 121, 121)
                 .addComponent(loginButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
+                .addComponent(contactUsBtn)
+                .addGap(188, 188, 188)
                 .addComponent(logoutButton)
                 .addGap(28, 28, 28))
+            .addGroup(leftMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(leftMenuPanelLayout.createSequentialGroup()
+                    .addGap(244, 244, 244)
+                    .addComponent(AboutELearningBtn)
+                    .addContainerGap(330, Short.MAX_VALUE)))
         );
 
         jSplitPane1.setLeftComponent(leftMenuPanel);
@@ -98,7 +149,7 @@ public class MainAppJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -118,7 +169,8 @@ public class MainAppJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Login loginPanel = new Login(appContainerPanel,
                 this.logoutButton, this.loginButton,
-                this.userSignUpObj);
+                this.userSignUpObj, this.userDefaultDataObj,
+                this.professorDataObj, this.studentDataObj);
         appContainerPanel.add("Login", loginPanel);
         CardLayout layout = (CardLayout) appContainerPanel.getLayout();
         layout.next(appContainerPanel);
@@ -128,11 +180,31 @@ public class MainAppJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Login loginPanel = new Login(appContainerPanel,
                 this.logoutButton, this.loginButton,
-                this.userSignUpObj);
+                this.userSignUpObj, this.userDefaultDataObj,
+                this.professorDataObj, this.studentDataObj);
         appContainerPanel.add("Login", loginPanel);
         CardLayout layout = (CardLayout) appContainerPanel.getLayout();
         layout.next(appContainerPanel);
     }//GEN-LAST:event_logoutButtonActionPerformed
+
+    private void AboutELearningBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutELearningBtnActionPerformed
+        // TODO add your handling code here:
+
+        AboutELearningJPanel aboutELearningJPanel = new AboutELearningJPanel(appContainerPanel);
+        appContainerPanel.add("AboutELearningJPanel", aboutELearningJPanel);
+        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
+        layout.next(appContainerPanel);
+
+    }//GEN-LAST:event_AboutELearningBtnActionPerformed
+
+    private void contactUsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactUsBtnActionPerformed
+        // TODO add your handling code here:
+        ContactUsELearningJPanel contactUsELearningJPanel = new ContactUsELearningJPanel(appContainerPanel, feedback);
+        appContainerPanel.add("ContactUsELearningJPanel", contactUsELearningJPanel);
+        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
+        layout.next(appContainerPanel);
+
+    }//GEN-LAST:event_contactUsBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,15 +249,104 @@ public class MainAppJFrame extends javax.swing.JFrame {
         userObj.setUserType("admin");
         userObj.setEmail("");
 
+        UserModel profUserObj = new UserModel();
+        profUserObj.setFullName("Sample Professor");
+        profUserObj.setUsername("sprof");
+        profUserObj.setPassword("sprof");
+        profUserObj.setUserType("professor");
+        profUserObj.setEmail("sprof@elearning.com");
+        profUserObj.setMobile("123456");
+
+        UserModel stuUserObj = new UserModel();
+        stuUserObj.setFullName("Sample Student");
+        stuUserObj.setUsername("sstud");
+        stuUserObj.setPassword("sstud");
+        stuUserObj.setUserType("student");
+        stuUserObj.setEmail("sstud@elearning.com");
+        stuUserObj.setMobile("123456");
+
         this.userSignUpObj.getUserLi().add(userObj);
+        this.userSignUpObj.getUserLi().add(profUserObj);
+        this.userSignUpObj.getUserLi().add(stuUserObj);
     }
-    
-    private void loadDefaultCourseData(){
-        
+
+    private void loadDefaultCourseData() {
+        CourseModel course1 = new CourseModel("Java Programming Language", "Java Programming", "3");
+        CourseModel course2 = new CourseModel("Programming on C++", "C++ Programming", "3");
+        CourseModel course3 = new CourseModel("AI - Artificial Intelligence", "Artificial Intelligence", "2");
+        CourseModel course4 = new CourseModel("own course", "", "3");
+        CourseModel course5 = new CourseModel("Software Engineering", "Software Engineering", "3");
+        CourseModel course6 = new CourseModel("Spring", "Spring Framework", "3");
+        CourseModel course7 = new CourseModel("Operating Systems", "Operating Systems", "3");
+        CourseModel course8 = new CourseModel("own course", "", "3");
+        CourseModel course9 = new CourseModel("Big Data", "Big Data", "3");
+        CourseModel course10 = new CourseModel("Data Science", "Data Science", "3");
+        CourseModel course11 = new CourseModel("Programming with C", "C Programming", "3");
+        CourseModel course12 = new CourseModel("own course", "", "3");
+        CourseModel course13 = new CourseModel("Scala Programming", "Scala", "3");
+        CourseModel course14 = new CourseModel("Testing Tools", "Testing Tools", "3");
+        CourseModel course15 = new CourseModel("Testing with Selenium", "Selenium", "2");
+        CourseModel course16 = new CourseModel("own course", "", "3");
+
+        this.userDefaultDataObj.getCoursesList().add(course1);
+        this.userDefaultDataObj.getCoursesList().add(course2);
+        this.userDefaultDataObj.getCoursesList().add(course3);
+        this.userDefaultDataObj.getCoursesList().add(course4);
+        this.userDefaultDataObj.getCoursesList().add(course5);
+        this.userDefaultDataObj.getCoursesList().add(course6);
+        this.userDefaultDataObj.getCoursesList().add(course7);
+        this.userDefaultDataObj.getCoursesList().add(course8);
+        this.userDefaultDataObj.getCoursesList().add(course9);
+        this.userDefaultDataObj.getCoursesList().add(course10);
+        this.userDefaultDataObj.getCoursesList().add(course11);
+        this.userDefaultDataObj.getCoursesList().add(course12);
+        this.userDefaultDataObj.getCoursesList().add(course13);
+        this.userDefaultDataObj.getCoursesList().add(course14);
+        this.userDefaultDataObj.getCoursesList().add(course15);
+        this.userDefaultDataObj.getCoursesList().add(course16);
+
+        List<CourseModel> semisterSubject1 = new ArrayList<>();
+        semisterSubject1.add(course1);
+        //semisterSubject1.add(course1_1);
+        semisterSubject1.add(course2);
+        semisterSubject1.add(course3);
+        //semisterSubject1.add(course3_1);
+        //semisterSubject1.add(course3_2);
+        semisterSubject1.add(course4);
+
+        List<CourseModel> semisterSubject2 = new ArrayList<>();
+        semisterSubject2.add(course5);
+        semisterSubject2.add(course6);
+        semisterSubject2.add(course7);
+        semisterSubject2.add(course8);
+
+        List<CourseModel> semisterSubject3 = new ArrayList<>();
+        semisterSubject3.add(course9);
+        semisterSubject3.add(course10);
+        semisterSubject3.add(course11);
+        semisterSubject3.add(course12);
+
+        List<CourseModel> semisterSubject4 = new ArrayList<>();
+        semisterSubject4.add(course13);
+        semisterSubject4.add(course14);
+        semisterSubject4.add(course15);
+        semisterSubject4.add(course16);
+
+        SemisterModel semisterObj1 = new SemisterModel("Term-1", semisterSubject1);
+        SemisterModel semisterObj2 = new SemisterModel("Term-2", semisterSubject2);
+        SemisterModel semisterObj3 = new SemisterModel("Term-3", semisterSubject3);
+        SemisterModel semisterObj4 = new SemisterModel("Term-4", semisterSubject4);
+
+        this.userDefaultDataObj.getSemisterSubList().add(semisterObj1);
+        this.userDefaultDataObj.getSemisterSubList().add(semisterObj2);
+        this.userDefaultDataObj.getSemisterSubList().add(semisterObj3);
+        this.userDefaultDataObj.getSemisterSubList().add(semisterObj4);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AboutELearningBtn;
     private javax.swing.JPanel appContainerPanel;
+    private javax.swing.JButton contactUsBtn;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JPanel leftMenuPanel;
     private javax.swing.JButton loginButton;

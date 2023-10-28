@@ -21,7 +21,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jSplitPane1" alignment="1" max="32767" attributes="0"/>
+          <Component id="jSplitPane1" alignment="1" pref="436" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -36,6 +36,9 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="profMenuPanel">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder/>
@@ -55,11 +58,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="profCourseCatlogButton" min="-2" pref="122" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="profTeachingHistoryButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="profRegisterCourseButton" min="-2" pref="122" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="profManageCourseButton" min="-2" pref="114" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="profTeachingHistoryButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="profProfileButton" max="32767" attributes="0"/>
@@ -73,13 +76,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="profProfileButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" pref="36" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="profCourseCatlogButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="profRegisterCourseButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="profManageCourseButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="profTeachingHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="profViewStudentsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="profTeachingHistoryButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -105,6 +108,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Register Course"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="profRegisterCourseButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="profManageCourseButton">
               <Properties>
@@ -113,6 +119,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Manage Course"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="profManageCourseButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="profTeachingHistoryButton">
               <Properties>
@@ -121,6 +130,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Teaching History"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="profTeachingHistoryButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="profViewStudentsButton">
               <Properties>
@@ -129,6 +141,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="View Students"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="profViewStudentsButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="profProfileButton">
               <Properties>

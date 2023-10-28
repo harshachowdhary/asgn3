@@ -4,32 +4,49 @@
  */
 package elearning.ui.professor;
 
+import elearning.models.ProfessorDataModel;
+import elearning.models.StudentDataModel;
+import elearning.models.UserDefaultDataModel;
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
  *
- * @author HP
+ * @author harsh
  */
 public class ProfessorDashboardPanel extends javax.swing.JPanel {
 
     JPanel appContainerPanel;
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
     UserModel userObj;
+    UserDefaultDataModel userDefaultDataObj;
+    ProfessorDataModel professorDataObj;
+    StudentDataModel studentDataObj;
+
     /**
      * Creates new form ProfessorDashboardPanel
+     *
      * @param appContainerPanel
      * @param userSignUpObj
      * @param userObj
+     * @param userDefaultDataObj
+     * @param professorDataObj
+     * @param studentDataObj
      */
     public ProfessorDashboardPanel(JPanel appContainerPanel,
-            UserSignUpModel userSignUpObj, UserModel userObj) {
+            UserDirectory userSignUpObj, UserModel userObj,
+            UserDefaultDataModel userDefaultDataObj,
+            ProfessorDataModel professorDataObj,
+            StudentDataModel studentDataObj) {
         initComponents();
         this.appContainerPanel = appContainerPanel;
         this.userSignUpObj = userSignUpObj;
         this.userObj = userObj;
+        this.userDefaultDataObj = userDefaultDataObj;
+        this.professorDataObj = professorDataObj;
+        this.studentDataObj = studentDataObj;
     }
 
     /**
@@ -54,6 +71,7 @@ public class ProfessorDashboardPanel extends javax.swing.JPanel {
         jSplitPane1.setDividerLocation(90);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        profMenuPanel.setBackground(new java.awt.Color(255, 255, 255));
         profMenuPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         profCourseCatlogButton.setBackground(new java.awt.Color(51, 153, 255));
@@ -66,15 +84,35 @@ public class ProfessorDashboardPanel extends javax.swing.JPanel {
 
         profRegisterCourseButton.setBackground(new java.awt.Color(51, 153, 255));
         profRegisterCourseButton.setText("Register Course");
+        profRegisterCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profRegisterCourseButtonActionPerformed(evt);
+            }
+        });
 
         profManageCourseButton.setBackground(new java.awt.Color(51, 153, 255));
         profManageCourseButton.setText("Manage Course");
+        profManageCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profManageCourseButtonActionPerformed(evt);
+            }
+        });
 
         profTeachingHistoryButton.setBackground(new java.awt.Color(51, 153, 255));
         profTeachingHistoryButton.setText("Teaching History");
+        profTeachingHistoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profTeachingHistoryButtonActionPerformed(evt);
+            }
+        });
 
         profViewStudentsButton.setBackground(new java.awt.Color(51, 153, 255));
         profViewStudentsButton.setText("View Students");
+        profViewStudentsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profViewStudentsButtonActionPerformed(evt);
+            }
+        });
 
         profProfileButton.setBackground(new java.awt.Color(51, 153, 255));
         profProfileButton.setText("Profile");
@@ -92,11 +130,11 @@ public class ProfessorDashboardPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(profCourseCatlogButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(profTeachingHistoryButton)
+                .addGap(18, 18, 18)
                 .addComponent(profRegisterCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(profManageCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(profTeachingHistoryButton)
                 .addGap(18, 18, 18)
                 .addGroup(profMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(profProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -107,13 +145,13 @@ public class ProfessorDashboardPanel extends javax.swing.JPanel {
             profMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profMenuPanelLayout.createSequentialGroup()
                 .addComponent(profProfileButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGap(18, 36, Short.MAX_VALUE)
                 .addGroup(profMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(profCourseCatlogButton)
                     .addComponent(profRegisterCourseButton)
                     .addComponent(profManageCourseButton)
-                    .addComponent(profTeachingHistoryButton)
-                    .addComponent(profViewStudentsButton))
+                    .addComponent(profViewStudentsButton)
+                    .addComponent(profTeachingHistoryButton))
                 .addContainerGap())
         );
 
@@ -131,13 +169,14 @@ public class ProfessorDashboardPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void profCourseCatlogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profCourseCatlogButtonActionPerformed
         // TODO add your handling code here:
-        ProfCourseCatalogPanel courseCatalog = new ProfCourseCatalogPanel(profContentPanel);
+        ProfCourseCatalogPanel courseCatalog = new ProfCourseCatalogPanel(
+                profContentPanel, this.userDefaultDataObj);
         profContentPanel.add("ProfCourseCatalog", courseCatalog);
         CardLayout layout = (CardLayout) profContentPanel.getLayout();
         layout.next(profContentPanel);
@@ -151,6 +190,43 @@ public class ProfessorDashboardPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) profContentPanel.getLayout();
         layout.next(profContentPanel);
     }//GEN-LAST:event_profProfileButtonActionPerformed
+
+    private void profRegisterCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profRegisterCourseButtonActionPerformed
+        // TODO add your handling code here:
+        ProfessorRegisterCoursePanel registerCourse = new ProfessorRegisterCoursePanel(
+                profContentPanel, userDefaultDataObj, userObj, professorDataObj);
+        profContentPanel.add("ProfRegisterCourse", registerCourse);
+        CardLayout layout = (CardLayout) profContentPanel.getLayout();
+        layout.next(profContentPanel);
+    }//GEN-LAST:event_profRegisterCourseButtonActionPerformed
+
+    private void profTeachingHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profTeachingHistoryButtonActionPerformed
+        // TODO add your handling code here:
+        ProfessorTeachingHistoryPanel tachingHistory = new ProfessorTeachingHistoryPanel(
+                profContentPanel, professorDataObj, userObj);
+        profContentPanel.add("ProfTeachingHistory", tachingHistory);
+        CardLayout layout = (CardLayout) profContentPanel.getLayout();
+        layout.next(profContentPanel);
+    }//GEN-LAST:event_profTeachingHistoryButtonActionPerformed
+
+    private void profViewStudentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profViewStudentsButtonActionPerformed
+        // TODO add your handling code here:
+        ProfViewStudentsPanel viewStudents = new ProfViewStudentsPanel(
+                profContentPanel, userObj, professorDataObj, studentDataObj);
+        profContentPanel.add("ProfViewStudents", viewStudents);
+        CardLayout layout = (CardLayout) profContentPanel.getLayout();
+        layout.next(profContentPanel);
+    }//GEN-LAST:event_profViewStudentsButtonActionPerformed
+
+    private void profManageCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profManageCourseButtonActionPerformed
+        // TODO add your handling code here:
+        ProfessorManageCoursePanel manageCourse = new ProfessorManageCoursePanel(
+                profContentPanel, userDefaultDataObj, userObj, professorDataObj, studentDataObj);
+        
+        profContentPanel.add("ProfManageCourse", manageCourse);
+        CardLayout layout = (CardLayout) profContentPanel.getLayout();
+        layout.next(profContentPanel);
+    }//GEN-LAST:event_profManageCourseButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

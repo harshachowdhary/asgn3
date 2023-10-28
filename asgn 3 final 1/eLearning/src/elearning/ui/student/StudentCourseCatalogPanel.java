@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package elearning.ui.admin;
+package elearning.ui.student;
 
 import elearning.models.CourseModel;
 import elearning.models.SemisterModel;
@@ -14,9 +14,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author harsh
  */
-public class AdminCourseCatalogPanel extends javax.swing.JPanel {
+public class StudentCourseCatalogPanel extends javax.swing.JPanel {
 
-    JPanel adminDashContentPanel;
+    JPanel studentContentPanel;
     UserDefaultDataModel userDefaultDataObj;
 
     /**
@@ -26,13 +26,13 @@ public class AdminCourseCatalogPanel extends javax.swing.JPanel {
     /**
      * Creates new form CourseCatalogPanel
      *
-     * @param adminDashContentPanel
+     * @param studentContentPanel
      * @param userDefaultDataObj
      */
-    public AdminCourseCatalogPanel(JPanel adminDashContentPanel,
+    public StudentCourseCatalogPanel(JPanel studentContentPanel,
             UserDefaultDataModel userDefaultDataObj) {
         initComponents();
-        this.adminDashContentPanel = adminDashContentPanel;
+        this.studentContentPanel = studentContentPanel;
         this.userDefaultDataObj = userDefaultDataObj;
 
         loadTableData();
@@ -59,6 +59,7 @@ public class AdminCourseCatalogPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+
             },
             new String [] {
                 "SNo", "Course Name", "Subject/ Stream",
@@ -72,17 +73,18 @@ public class AdminCourseCatalogPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(231, 231, 231)
                 .addComponent(jLabel1)
-                .addGap(234, 234, 234))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,10 +95,9 @@ public class AdminCourseCatalogPanel extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
     private void loadTableData() {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);

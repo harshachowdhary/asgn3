@@ -5,7 +5,7 @@
 package elearning.ui.admin;
 
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class AdminRegisteredProfessorsPanel extends javax.swing.JPanel {
 
     JPanel adminDashContentPanel;
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
 
     /**
      * Creates new form AdminRegisteredUsersPanel
@@ -25,7 +25,7 @@ public class AdminRegisteredProfessorsPanel extends javax.swing.JPanel {
      * @param userSignUpObj
      */
     public AdminRegisteredProfessorsPanel(JPanel adminDashContentPanel,
-            UserSignUpModel userSignUpObj) {
+            UserDirectory userSignUpObj) {
         initComponents();
         this.adminDashContentPanel = adminDashContentPanel;
         this.userSignUpObj = userSignUpObj;

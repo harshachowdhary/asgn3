@@ -13,19 +13,28 @@ import java.util.List;
 public class SemisterModel {
 
     private String semisterName;
-    private List<SubjectModel> subjects;
-    
+    private List<CourseModel> subjects;
+
+    public SemisterModel() {
+
+    }
+
+    public SemisterModel(String semisterName, List<CourseModel> subjects) {
+        this.semisterName = semisterName;
+        this.subjects = subjects;
+    }
+
     /**
      * @return the subjects
      */
-    public List<SubjectModel> getSubjects() {
+    public List<CourseModel> getSubjects() {
         return subjects;
     }
 
     /**
      * @param subjects the subjects to set
      */
-    public void setSubjects(List<SubjectModel> subjects) {
+    public void setSubjects(List<CourseModel> subjects) {
         this.subjects = subjects;
     }
 
@@ -42,7 +51,5 @@ public class SemisterModel {
     public void setSemisterName(String semisterName) {
         this.semisterName = semisterName;
     }
-    
-    
-    
+
 }

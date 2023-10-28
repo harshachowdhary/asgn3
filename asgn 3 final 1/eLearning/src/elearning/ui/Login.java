@@ -4,9 +4,12 @@
  */
 package elearning.ui;
 
+import elearning.models.ProfessorDataModel;
+import elearning.models.StudentDataModel;
+import elearning.models.UserDefaultDataModel;
 import elearning.ui.admin.AdminDashboardPanel;
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import elearning.ui.professor.ProfessorDashboardPanel;
 import elearning.ui.student.StudentDashboardPanel;
 import java.awt.CardLayout;
@@ -23,7 +26,10 @@ public class Login extends javax.swing.JPanel {
     JButton logoutButton;
     JButton loginButton;
 
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
+    UserDefaultDataModel userDefaultDataObj;
+    ProfessorDataModel professorDataObj;
+    StudentDataModel studentDataObj;
 
     /**
      * Creates new form Login
@@ -32,10 +38,15 @@ public class Login extends javax.swing.JPanel {
      * @param logoutButton
      * @param loginButton
      * @param userSignUpObj
+     * @param userDefaultDataObj
+     * @param professorDataObj
+     * @param studentDataObj
      */
     public Login(JPanel appContainerPanel,
             JButton logoutButton, JButton loginButton,
-            UserSignUpModel userSignUpObj) {
+            UserDirectory userSignUpObj, UserDefaultDataModel userDefaultDataObj,
+            ProfessorDataModel professorDataObj,
+            StudentDataModel studentDataObj) {
         initComponents();
 
         this.jDialog1.setVisible(false);
@@ -49,14 +60,23 @@ public class Login extends javax.swing.JPanel {
         this.loginButton.setVisible(true);
 
         this.userSignUpObj = userSignUpObj;
+        this.userDefaultDataObj = userDefaultDataObj;
+        this.professorDataObj = professorDataObj;
+        this.studentDataObj = studentDataObj;
     }
 
-    public Login(JPanel appContainerPanel, UserSignUpModel userSignUpObj) {
+    public Login(JPanel appContainerPanel,
+            UserDirectory userSignUpObj, UserDefaultDataModel userDefaultDataObj,
+            ProfessorDataModel professorDataObj,
+            StudentDataModel studentDataObj) {
         initComponents();
         this.jDialog1.setVisible(false);
         this.jLabel5.setVisible(false);
         this.appContainerPanel = appContainerPanel;
         this.userSignUpObj = userSignUpObj;
+        this.userDefaultDataObj = userDefaultDataObj;
+        this.professorDataObj = professorDataObj;
+        this.studentDataObj = studentDataObj;
 
         System.out.println("User Details Size : " + this.userSignUpObj.getUserLi().size());
     }
@@ -100,7 +120,7 @@ public class Login extends javax.swing.JPanel {
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Email");
+        jLabel2.setText("username");
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(102, 102, 102));
@@ -232,15 +252,28 @@ public class Login extends javax.swing.JPanel {
                         .findAny()
                         .orElse(null);
 
-                if (validUserObj != null && validUserObj.getUserType().equalsIgnoreCase("professor")) {
-                    ProfessorDashboardPanel profDash
-                            = new ProfessorDashboardPanel(appContainerPanel, this.userSignUpObj,
-                                    validUserObj);
-                    appContainerPanel.add("ProfessorDashboard", profDash);
-                    CardLayout layout = (CardLayout) appContainerPanel.getLayout();
-                    layout.next(appContainerPanel);
-                    this.logoutButton.setVisible(true);
-                    this.loginButton.setVisible(false);
+                if (validUserObj != null) {
+                    if (validUserObj.getUserType().equalsIgnoreCase("professor")) {
+                        ProfessorDashboardPanel profDash
+                                = new ProfessorDashboardPanel(appContainerPanel, this.userSignUpObj,
+                                        validUserObj, this.userDefaultDataObj,
+                                        this.professorDataObj, this.studentDataObj);
+                        appContainerPanel.add("ProfessorDashboard", profDash);
+                        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
+                        layout.next(appContainerPanel);
+                        this.logoutButton.setVisible(true);
+                        this.loginButton.setVisible(false);
+                    } else {
+                        StudentDashboardPanel studentDash
+                                = new StudentDashboardPanel(appContainerPanel, this.userSignUpObj,
+                                        validUserObj, userDefaultDataObj,
+                                        professorDataObj, studentDataObj);
+                        appContainerPanel.add("StudentDashboard", studentDash);
+                        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
+                        layout.next(appContainerPanel);
+                        this.logoutButton.setVisible(true);
+                        this.loginButton.setVisible(false);
+                    }
                 } else {
                     this.jLabel5.setVisible(true);
                     this.jLabel5.setText("");
@@ -265,7 +298,8 @@ public class Login extends javax.swing.JPanel {
                 if (validUserObj != null && validUserObj.getUserType().equalsIgnoreCase("student")) {
                     StudentDashboardPanel studentDash
                             = new StudentDashboardPanel(appContainerPanel, this.userSignUpObj,
-                                    validUserObj);
+                                    validUserObj, userDefaultDataObj,
+                                    professorDataObj, studentDataObj);
                     appContainerPanel.add("StudentDashboard", studentDash);
                     CardLayout layout = (CardLayout) appContainerPanel.getLayout();
                     layout.next(appContainerPanel);
@@ -281,7 +315,7 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        SignUp signUpPanel = new SignUp(appContainerPanel, userSignUpObj);
+        SignUp signUpPanel = new SignUp(appContainerPanel, userSignUpObj, userDefaultDataObj, professorDataObj, studentDataObj);
         appContainerPanel.add("SignUp", signUpPanel);
         CardLayout layout = (CardLayout) appContainerPanel.getLayout();
         layout.next(appContainerPanel);
@@ -300,7 +334,9 @@ public class Login extends javax.swing.JPanel {
                     .orElse(null);
 
             if (validUserObj != null && validUserObj.getUserType().equalsIgnoreCase("admin")) {
-                AdminDashboardPanel adminDash = new AdminDashboardPanel(appContainerPanel, this.userSignUpObj, validUserObj);
+                AdminDashboardPanel adminDash = new AdminDashboardPanel(
+                        appContainerPanel, this.userSignUpObj, validUserObj,
+                        this.userDefaultDataObj);
                 appContainerPanel.add("AdminDashboard", adminDash);
                 CardLayout layout = (CardLayout) appContainerPanel.getLayout();
                 layout.next(appContainerPanel);

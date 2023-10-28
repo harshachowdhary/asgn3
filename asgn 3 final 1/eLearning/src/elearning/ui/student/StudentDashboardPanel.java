@@ -4,20 +4,26 @@
  */
 package elearning.ui.student;
 
+import elearning.models.ProfessorDataModel;
+import elearning.models.StudentDataModel;
+import elearning.models.UserDefaultDataModel;
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
  *
- * @author HP
+ * @author harsh
  */
 public class StudentDashboardPanel extends javax.swing.JPanel {
 
     JPanel appContainerPanel;
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
     UserModel userObj;
+    UserDefaultDataModel userDefaultDataObj;
+    ProfessorDataModel professorDataObj;
+    StudentDataModel studentDataObj;
 
     /**
      * Creates new form StudentDashboardPanel
@@ -25,13 +31,22 @@ public class StudentDashboardPanel extends javax.swing.JPanel {
      * @param appContainerPanel
      * @param userSignUpObj
      * @param userObj
+     * @param userDefaultDataObj
+     * @param professorDataObj
+     * @param studentDataObj
      */
     public StudentDashboardPanel(JPanel appContainerPanel,
-            UserSignUpModel userSignUpObj, UserModel userObj) {
+            UserDirectory userSignUpObj, UserModel userObj,
+            UserDefaultDataModel userDefaultDataObj,
+            ProfessorDataModel professorDataObj,
+            StudentDataModel studentDataObj) {
         initComponents();
         this.appContainerPanel = appContainerPanel;
         this.userSignUpObj = userSignUpObj;
         this.userObj = userObj;
+        this.userDefaultDataObj = userDefaultDataObj;
+        this.professorDataObj = professorDataObj;
+        this.studentDataObj = studentDataObj;
     }
 
     /**
@@ -50,6 +65,7 @@ public class StudentDashboardPanel extends javax.swing.JPanel {
         RegisterCourseButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        StudentProfListButton = new javax.swing.JButton();
         studentContentPanel = new javax.swing.JPanel();
 
         jSplitPane1.setDividerLocation(90);
@@ -68,22 +84,50 @@ public class StudentDashboardPanel extends javax.swing.JPanel {
 
         CourseCatalogButton.setBackground(new java.awt.Color(51, 153, 255));
         CourseCatalogButton.setText("Course Catalog");
+        CourseCatalogButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CourseCatalogButtonActionPerformed(evt);
+            }
+        });
 
         RegisterCourseButton.setBackground(new java.awt.Color(51, 153, 255));
         RegisterCourseButton.setText("Register Course");
+        RegisterCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegisterCourseButtonActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(51, 153, 255));
         jButton1.setText("Transcript");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(51, 153, 255));
         jButton2.setText("Certification Request");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        StudentProfListButton.setBackground(new java.awt.Color(0, 153, 255));
+        StudentProfListButton.setText("Professor List");
+        StudentProfListButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StudentProfListButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout studentMenuPanelLayout = new javax.swing.GroupLayout(studentMenuPanel);
         studentMenuPanel.setLayout(studentMenuPanelLayout);
         studentMenuPanelLayout.setHorizontalGroup(
             studentMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentMenuPanelLayout.createSequentialGroup()
-                .addContainerGap(530, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(studentProfileButton)
                 .addContainerGap())
             .addGroup(studentMenuPanelLayout.createSequentialGroup()
@@ -95,6 +139,8 @@ public class StudentDashboardPanel extends javax.swing.JPanel {
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(StudentProfListButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         studentMenuPanelLayout.setVerticalGroup(
@@ -107,7 +153,8 @@ public class StudentDashboardPanel extends javax.swing.JPanel {
                     .addComponent(CourseCatalogButton)
                     .addComponent(RegisterCourseButton)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(StudentProfListButton))
                 .addContainerGap())
         );
 
@@ -142,10 +189,57 @@ public class StudentDashboardPanel extends javax.swing.JPanel {
         layout.next(studentContentPanel);
     }//GEN-LAST:event_studentProfileButtonActionPerformed
 
+    private void CourseCatalogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CourseCatalogButtonActionPerformed
+        // TODO add your handling code here:
+        StudentCourseCatalogPanel courseCatalog = new StudentCourseCatalogPanel(
+                studentContentPanel, userDefaultDataObj);
+        studentContentPanel.add("StudentCourseCatalog", courseCatalog);
+        CardLayout layout = (CardLayout) studentContentPanel.getLayout();
+        layout.next(studentContentPanel);
+
+    }//GEN-LAST:event_CourseCatalogButtonActionPerformed
+
+    private void StudentProfListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentProfListButtonActionPerformed
+        // TODO add your handling code here:
+        StudentProfessorListPanel studentProfList = new StudentProfessorListPanel(
+                studentContentPanel, professorDataObj);
+        studentContentPanel.add("StudentProfessorList", studentProfList);
+        CardLayout layout = (CardLayout) studentContentPanel.getLayout();
+        layout.next(studentContentPanel);
+    }//GEN-LAST:event_StudentProfListButtonActionPerformed
+
+    private void RegisterCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterCourseButtonActionPerformed
+        // TODO add your handling code here:
+        StudentCourseRegisterPanel registerCourse = new StudentCourseRegisterPanel(
+                studentContentPanel, professorDataObj, userDefaultDataObj, userObj, studentDataObj);
+        studentContentPanel.add("StudentRegisterCourse", registerCourse);
+        CardLayout layout = (CardLayout) studentContentPanel.getLayout();
+        layout.next(studentContentPanel);
+    }//GEN-LAST:event_RegisterCourseButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        StudentTarnscriptPanel transciptPanel = new StudentTarnscriptPanel(
+                studentContentPanel, studentDataObj);
+        studentContentPanel.add("StudentTarnscript", transciptPanel);
+        CardLayout layout = (CardLayout) studentContentPanel.getLayout();
+        layout.next(studentContentPanel);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        StudentCertificateRequestPanel certificateReq = new StudentCertificateRequestPanel(
+                studentContentPanel, studentDataObj);
+        studentContentPanel.add("StudentCertReq", certificateReq);
+        CardLayout layout = (CardLayout) studentContentPanel.getLayout();
+        layout.next(studentContentPanel);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CourseCatalogButton;
     private javax.swing.JButton RegisterCourseButton;
+    private javax.swing.JButton StudentProfListButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JSplitPane jSplitPane1;

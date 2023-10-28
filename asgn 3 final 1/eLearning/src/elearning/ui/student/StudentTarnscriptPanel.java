@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package elearning.ui.admin;
+package elearning.ui.student;
 
-import elearning.models.CourseModel;
-import elearning.models.SemisterModel;
-import elearning.models.UserDefaultDataModel;
+import elearning.models.StudentCourseModel;
+import elearning.models.StudentDataModel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,27 +13,21 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author harsh
  */
-public class AdminCourseCatalogPanel extends javax.swing.JPanel {
+public class StudentTarnscriptPanel extends javax.swing.JPanel {
 
-    JPanel adminDashContentPanel;
-    UserDefaultDataModel userDefaultDataObj;
-
-    /**
-     * Creates new form CourseCatalogPanel
-     */
+    JPanel studentContentPanel;
+    StudentDataModel studentDataObj;
 
     /**
-     * Creates new form CourseCatalogPanel
+     * Creates new form ProfessorTeachingHistoryPanel
      *
-     * @param adminDashContentPanel
-     * @param userDefaultDataObj
+     * @param studentContentPanel
+     * @param studentDataObj
      */
-    public AdminCourseCatalogPanel(JPanel adminDashContentPanel,
-            UserDefaultDataModel userDefaultDataObj) {
+    public StudentTarnscriptPanel(JPanel studentContentPanel,
+            StudentDataModel studentDataObj) {
         initComponents();
-        this.adminDashContentPanel = adminDashContentPanel;
-        this.userDefaultDataObj = userDefaultDataObj;
-
+        this.studentDataObj = studentDataObj;
         loadTableData();
     }
 
@@ -55,14 +48,15 @@ public class AdminCourseCatalogPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Course Catalog");
+        jLabel1.setText("Transcript (Course History)");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+
             },
             new String [] {
-                "SNo", "Course Name", "Subject/ Stream",
-                "Term","Duration", "Description"
+                "Sno", "Course", "Subject", "Term","Professor",
+                "Start Date", "End Date", "Status"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -72,50 +66,52 @@ public class AdminCourseCatalogPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(237, 237, 237)
                 .addComponent(jLabel1)
-                .addGap(234, 234, 234))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
     private void loadTableData() {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
-        if (this.userDefaultDataObj.getSemisterSubList() != null
-                && !this.userDefaultDataObj.getSemisterSubList().isEmpty()) {
+        if (this.studentDataObj.getStudentCourseLi() != null
+                && !this.studentDataObj.getStudentCourseLi().isEmpty()) {
             int rowIndex = 1;
-            for (SemisterModel semisterObj : this.userDefaultDataObj.getSemisterSubList()) {
-                for (CourseModel courseObj : semisterObj.getSubjects()) {
-                    Object[] row = new Object[6];
+            for (StudentCourseModel studCourseObj : this.studentDataObj.getStudentCourseLi()) {
+                
+                    Object[] row = new Object[8];
                     row[0] = rowIndex;
-                    row[1] = courseObj.getCourseName();
-                    row[2] = courseObj.getSubjectName();
-                    row[3] = semisterObj.getSemisterName();
-                    row[4] = courseObj.getDuration();
-                    row[5] = "";
-
+                    row[1] = studCourseObj.getCourseName();
+                    row[2] = studCourseObj.getSubjectName();
+                    row[3] = studCourseObj.getSemisterName();
+                    row[4] = studCourseObj.getProfessorName();
+                    row[5] = studCourseObj.getStartDate();
+                    row[6] = studCourseObj.getEndDate();
+                    row[7] = studCourseObj.getStatus();
+                    
                     dtm.addRow(row);
                     rowIndex++;
-                }
+                
             }
         }
     }

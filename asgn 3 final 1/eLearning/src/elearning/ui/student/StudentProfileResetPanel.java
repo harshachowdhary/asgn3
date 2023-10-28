@@ -5,7 +5,7 @@
 package elearning.ui.student;
 
 import elearning.models.UserModel;
-import elearning.models.UserSignUpModel;
+import elearning.models.UserDirectory;
 import elearning.ui.Login;
 import java.awt.CardLayout;
 import java.util.ArrayList;
@@ -15,14 +15,14 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author HP
+ * @author harsh
  */
 public class StudentProfileResetPanel extends javax.swing.JPanel {
 
     JPanel studentContentPanel;
     JPanel appContainerPanel;
     UserModel userObj;
-    UserSignUpModel userSignUpObj;
+    UserDirectory userSignUpObj;
 
     /**
      * Creates new form AdminProfileResetPanel
@@ -34,7 +34,7 @@ public class StudentProfileResetPanel extends javax.swing.JPanel {
      */
     public StudentProfileResetPanel(JPanel appContainerPanel,
             JPanel studentContentPanel, UserModel userObj,
-            UserSignUpModel userSignUpObj) {
+            UserDirectory userSignUpObj) {
         initComponents();
         this.appContainerPanel = appContainerPanel;
         this.studentContentPanel = studentContentPanel;
@@ -188,10 +188,10 @@ public class StudentProfileResetPanel extends javax.swing.JPanel {
 
         JOptionPane.showMessageDialog(null, "Profile Updated Successfully!");
 
-        Login loginPanel = new Login(appContainerPanel, userSignUpObj);
-        appContainerPanel.add("Login", loginPanel);
-        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
-        layout.next(appContainerPanel);
+//        Login loginPanel = new Login(appContainerPanel, userSignUpObj);
+//        appContainerPanel.add("Login", loginPanel);
+//        CardLayout layout = (CardLayout) appContainerPanel.getLayout();
+//        layout.next(appContainerPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
